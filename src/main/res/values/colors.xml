@@ -24,6 +24,6 @@
     <color name="theme_background">#263238</color>
     <color name="cardView">#607D8B</color>
     <color name="ltgray">#ffe0e0e0</color>
-    <color name="pink">#FF4081</color>
+    <color name="accent">#FF4081</color>
     <color name="tran">#80000000</color>
 </resources>
