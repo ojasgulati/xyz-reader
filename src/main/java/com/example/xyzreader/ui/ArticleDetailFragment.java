@@ -46,7 +46,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import static com.example.xyzreader.R.id.photo;
 
 /**
  * A fragment representing a single Article detail screen. This fragment is
@@ -160,7 +159,7 @@ public class ArticleDetailFragment extends Fragment implements
 
 
         toolbarLayout = (CollapsingToolbarLayout) mRootView.findViewById(R.id.collapsing_toolbar_layout);
-        mPhotoView = (ImageView) mRootView.findViewById(photo);
+        mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
         meta_bar = (LinearLayout) mRootView.findViewById(R.id.meta_bar);
         mStatusBarColorDrawable = new ColorDrawable(0);
 
