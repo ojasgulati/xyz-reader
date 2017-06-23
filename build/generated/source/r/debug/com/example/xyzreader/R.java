@@ -26,6 +26,8 @@ public final class R {
         public static final int design_fab_out=0x7f05000e;
         public static final int design_snackbar_in=0x7f05000f;
         public static final int design_snackbar_out=0x7f050010;
+        public static final int slide_down=0x7f050011;
+        public static final int slide_up=0x7f050012;
     }
     public static final class attr {
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
@@ -3077,10 +3079,11 @@ containing a value of this type.
         public static final int appbar_scrolling_view_behavior=0x7f070025;
         public static final int bottom_sheet_behavior=0x7f070026;
         public static final int character_counter_pattern=0x7f070027;
+        public static final int image_transaction=0x7f070028;
         public static final int search_menu_title=0x7f070013;
         public static final int status_bar_notification_info_overflow=0x7f070014;
-        public static final int up=0x7f070028;
-        public static final int welcome_xyz_reader=0x7f070029;
+        public static final int up=0x7f070029;
+        public static final int welcome_xyz_reader=0x7f07002a;
     }
     public static final class style {
         public static final int AlertDialog_AppCompat=0x7f0900a5;
@@ -3371,8 +3374,6 @@ containing a value of this type.
         public static final int Theme_AppCompat_Light_NoActionBar=0x7f090123;
         public static final int Theme_AppCompat_NoActionBar=0x7f090124;
         public static final int Theme_Bacon=0x7f090092;
-        /** <item name="android:windowTranslucentStatus">true</item>
-         */
         public static final int Theme_Bacon_Detail=0x7f090093;
         public static final int Theme_Design=0x7f090125;
         public static final int Theme_Design_BottomSheetDialog=0x7f090126;

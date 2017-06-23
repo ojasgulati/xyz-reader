@@ -1292,7 +1292,7 @@
                     "startOffset": 20418,
                     "endLine": 295,
                     "endColumn": 12,
-                    "endOffset": 20818
+                    "endOffset": 20811
                 },
                 "from": {
                     "file": "C:\\Users\\bittu\\AndroidStudioProjects\\xyz-reader-starter-code\\XYZReader\\src\\main\\res\\values-v21\\styles.xml",
@@ -1302,7 +1302,7 @@
                         "startOffset": 59,
                         "endLine": 9,
                         "endColumn": 12,
-                        "endOffset": 465
+                        "endOffset": 458
                     }
                 }
             },
@@ -1310,10 +1310,10 @@
                 "to": {
                     "startLine": 296,
                     "startColumn": 4,
-                    "startOffset": 20823,
+                    "startOffset": 20816,
                     "endLine": 298,
                     "endColumn": 12,
-                    "endOffset": 20993
+                    "endOffset": 20986
                 },
                 "from": {
                     "file": "C:\\Users\\bittu\\.android\\build-cache\\cb21d7a43a46bc95a478a3b2335c2718f7c6136b\\output\\res\\values-v21\\values-v21.xml"
@@ -1323,10 +1323,10 @@
                 "to": {
                     "startLine": 299,
                     "startColumn": 4,
-                    "startOffset": 20998,
+                    "startOffset": 20991,
                     "endLine": 303,
                     "endColumn": 12,
-                    "endOffset": 21334
+                    "endOffset": 21327
                 },
                 "from": {
                     "file": "C:\\Users\\bittu\\.android\\build-cache\\cb21d7a43a46bc95a478a3b2335c2718f7c6136b\\output\\res\\values-v21\\values-v21.xml"
@@ -1336,10 +1336,10 @@
                 "to": {
                     "startLine": 304,
                     "startColumn": 4,
-                    "startOffset": 21339,
+                    "startOffset": 21332,
                     "endLine": 306,
                     "endColumn": 12,
-                    "endOffset": 21528
+                    "endOffset": 21521
                 },
                 "from": {
                     "file": "C:\\Users\\bittu\\.android\\build-cache\\0cedeb97604f3fdef33fa8232c42bd57a73c0dca\\output\\res\\values-v21\\values-v21.xml"

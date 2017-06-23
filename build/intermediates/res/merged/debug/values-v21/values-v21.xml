@@ -288,7 +288,7 @@
 
     </style>
     <style name="Theme.Bacon.Detail">
-        <!--<item name="android:windowTranslucentStatus">true</item>-->
+        <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:colorPrimary">@color/theme_primary</item>

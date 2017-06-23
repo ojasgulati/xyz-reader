@@ -1,5 +1,6 @@
 package com.example.xyzreader.ui;
 
+import android.app.ActivityOptions;
 import android.app.LoaderManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,7 +8,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.SharedElementCallback;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +32,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Map;
 
 /**
  * An activity representing a list of Articles. This activity has different presentations for
@@ -38,11 +44,13 @@ import java.util.GregorianCalendar;
 public class ArticleListActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
+    public static final String STARTING_ITEM_POSITION = "starting item position";
+    public static final String CURRENT_ITEM_POSITION = "current item position";
     private static final String TAG = ArticleListActivity.class.toString();
-
+    private static final String SHARED_ELEMENT = "shared element transition";
+    Adapter adapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
-
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
     // Use default locale format
     private SimpleDateFormat outputFormat = new SimpleDateFormat();
@@ -55,6 +63,45 @@ public class ArticleListActivity extends AppCompatActivity implements
             if (UpdaterService.BROADCAST_ACTION_STATE_CHANGE.equals(intent.getAction())) {
                 mIsRefreshing = intent.getBooleanExtra(UpdaterService.EXTRA_REFRESHING, false);
                 updateRefreshingUI();
+            }
+        }
+    };
+    private Bundle mTmpReenterState;
+    @SuppressWarnings("NewApi")
+    private final SharedElementCallback mCallback = new SharedElementCallback() {
+        @Override
+        public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+            if (mTmpReenterState != null) {
+                int startingPosition = mTmpReenterState.getInt(STARTING_ITEM_POSITION);
+                int currentPosition = mTmpReenterState.getInt(CURRENT_ITEM_POSITION);
+                if (startingPosition != currentPosition) {
+                    // If startingPosition != currentPosition the user must have swiped to a
+                    // different page in the DetailsActivity. We must update the shared element
+                    // so that the correct one falls into place.
+                    String newTransitionName = getString(R.string.image_transaction) + currentPosition;
+                    Log.v(TAG, newTransitionName);
+                    View newSharedElement = mRecyclerView.getChildAt(currentPosition).findViewById(R.id.thumbnail);
+                    if (newSharedElement != null) {
+                        names.clear();
+                        names.add(newTransitionName);
+                        sharedElements.clear();
+                        sharedElements.put(newTransitionName, newSharedElement);
+                    }
+                }
+
+                mTmpReenterState = null;
+            } else {
+                // If mTmpReenterState is null, then the activity is exiting.
+                View navigationBar = findViewById(android.R.id.navigationBarBackground);
+                View statusBar = findViewById(android.R.id.statusBarBackground);
+                if (navigationBar != null) {
+                    names.add(navigationBar.getTransitionName());
+                    sharedElements.put(navigationBar.getTransitionName(), navigationBar);
+                }
+                if (statusBar != null) {
+                    names.add(statusBar.getTransitionName());
+                    sharedElements.put(statusBar.getTransitionName(), statusBar);
+                }
             }
         }
     };
@@ -71,6 +118,7 @@ public class ArticleListActivity extends AppCompatActivity implements
             refresh();
         }
     }
+
 
     private void refresh() {
         startService(new Intent(this, UpdaterService.class));
@@ -100,7 +148,7 @@ public class ArticleListActivity extends AppCompatActivity implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        Adapter adapter = new Adapter(cursor);
+        adapter = new Adapter(cursor);
         adapter.setHasStableIds(true);
         mRecyclerView.setAdapter(adapter);
         int columnCount = getResources().getInteger(R.integer.list_column_count);
@@ -147,9 +195,16 @@ public class ArticleListActivity extends AppCompatActivity implements
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(Intent.ACTION_VIEW,
-                            ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition())));
-                    startActivity(i);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition())));
+                    //giving the starting adapter position to the details activity
+                    intent.putExtra(STARTING_ITEM_POSITION, vh.getAdapterPosition());
+                    Bundle mBundle = null;
+                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        // only for lollipop and newer versions
+                        intent.putExtra(SHARED_ELEMENT, ViewCompat.getTransitionName(vh.thumbnailView));
+                        mBundle = ActivityOptions.makeSceneTransitionAnimation(ArticleListActivity.this, vh.thumbnailView, ViewCompat.getTransitionName(vh.thumbnailView)).toBundle();
+                    }
+                    startActivity(intent, mBundle);
                 }
             });
             return vh;
@@ -191,6 +246,8 @@ public class ArticleListActivity extends AppCompatActivity implements
                     ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader());
             holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
             holder.thumbnailView.setAdjustViewBounds(true);
+
+            ViewCompat.setTransitionName(holder.thumbnailView, getResources().getString(R.string.image_transaction) + position);
         }
 
         @Override
@@ -199,4 +256,30 @@ public class ArticleListActivity extends AppCompatActivity implements
         }
     }
 
+//    @Override
+//    public void onActivityReenter(int requestCode, Intent data) {
+//        super.onActivityReenter(requestCode, data);
+//        mTmpReenterState = new Bundle(data.getExtras());
+//        int startingPosition = mTmpReenterState.getInt(STARTING_ITEM_POSITION);
+//        int currentPosition = mTmpReenterState.getInt(CURRENT_ITEM_POSITION);
+//        if (startingPosition != currentPosition) {
+//            mRecyclerView.scrollToPosition(currentPosition);
+//        }
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            postponeEnterTransition();
+//            mRecyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+//                @Override
+//                public boolean onPreDraw() {
+//                    mRecyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                        mRecyclerView.requestLayout();
+//                        startPostponedEnterTransition();
+//                        return true;
+//                    }
+//                    return false;
+//                }
+//            });
+//        }
+//    }
 }

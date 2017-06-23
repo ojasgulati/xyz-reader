@@ -15,6 +15,8 @@ int anim design_fab_in 0x7f05000d
 int anim design_fab_out 0x7f05000e
 int anim design_snackbar_in 0x7f05000f
 int anim design_snackbar_out 0x7f050010
+int anim slide_down 0x7f050011
+int anim slide_up 0x7f050012
 int attr actionBarDivider 0x7f010046
 int attr actionBarItemBackground 0x7f010047
 int attr actionBarPopupTheme 0x7f010040
@@ -995,10 +997,11 @@ int string app_name 0x7f070024
 int string appbar_scrolling_view_behavior 0x7f070025
 int string bottom_sheet_behavior 0x7f070026
 int string character_counter_pattern 0x7f070027
+int string image_transaction 0x7f070028
 int string search_menu_title 0x7f070013
 int string status_bar_notification_info_overflow 0x7f070014
-int string up 0x7f070028
-int string welcome_xyz_reader 0x7f070029
+int string up 0x7f070029
+int string welcome_xyz_reader 0x7f07002a
 int style AlertDialog_AppCompat 0x7f0900a5
 int style AlertDialog_AppCompat_Light 0x7f0900a6
 int style Animation_AppCompat_Dialog 0x7f0900a7

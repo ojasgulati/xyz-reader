@@ -20,7 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:background="@color/photo_placeholder" />
+            android:background="@color/photo_placeholder"
+            android:transitionName="@string/image_transaction" />
 
         <TextView
             android:id="@+id/article_title"
