@@ -21,6 +21,7 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import com.example.xyzreader.R;
@@ -106,10 +107,12 @@ public class ArticleListActivity extends AppCompatActivity implements
         }
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_list);
+        setExitSharedElementCallback(mCallback);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         getLoaderManager().initLoader(0, null, this);
@@ -160,6 +163,33 @@ public class ArticleListActivity extends AppCompatActivity implements
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mRecyclerView.setAdapter(null);
+    }
+
+    @Override
+    public void onActivityReenter(int requestCode, Intent data) {
+        super.onActivityReenter(requestCode, data);
+        mTmpReenterState = new Bundle(data.getExtras());
+        int startingPosition = mTmpReenterState.getInt(STARTING_ITEM_POSITION);
+        int currentPosition = mTmpReenterState.getInt(CURRENT_ITEM_POSITION);
+        if (startingPosition != currentPosition) {
+            mRecyclerView.scrollToPosition(currentPosition);
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            postponeEnterTransition();
+            mRecyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    mRecyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        mRecyclerView.requestLayout();
+                        startPostponedEnterTransition();
+                        return true;
+                    }
+                    return false;
+                }
+            });
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -255,31 +285,5 @@ public class ArticleListActivity extends AppCompatActivity implements
             return mCursor.getCount();
         }
     }
-
-//    @Override
-//    public void onActivityReenter(int requestCode, Intent data) {
-//        super.onActivityReenter(requestCode, data);
-//        mTmpReenterState = new Bundle(data.getExtras());
-//        int startingPosition = mTmpReenterState.getInt(STARTING_ITEM_POSITION);
-//        int currentPosition = mTmpReenterState.getInt(CURRENT_ITEM_POSITION);
-//        if (startingPosition != currentPosition) {
-//            mRecyclerView.scrollToPosition(currentPosition);
-//        }
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            postponeEnterTransition();
-//            mRecyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-//                @Override
-//                public boolean onPreDraw() {
-//                    mRecyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                        mRecyclerView.requestLayout();
-//                        startPostponedEnterTransition();
-//                        return true;
-//                    }
-//                    return false;
-//                }
-//            });
-//        }
-//    }
 }
+

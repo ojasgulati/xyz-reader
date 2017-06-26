@@ -229,30 +229,6 @@ public class ArticleDetailFragment extends Fragment implements
             bylineView.setText(byline);
             bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY).replaceAll("(\r\n|\n)", "<br />")));
 
-//            ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
-//                    .get(mCursor.getString(ArticleLoader.Query.PHOTO_URL), new ImageLoader.ImageListener() {
-//                        @Override
-//                        public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-//                            Bitmap bitmap = imageContainer.getBitmap();
-//                            if (bitmap != null) {
-//                                Palette p = Palette.generate(bitmap, 12);
-//                                mMutedColor = p.getDarkMutedColor(0xFF333333);
-//                                mPhotoView.setImageBitmap(imageContainer.getBitmap());
-//
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onErrorResponse(VolleyError volleyError) {
-//
-//                        }
-//                    });
-//        } else {
-//            mRootView.setVisibility(View.GONE);
-//            titleView.setText("N/A");
-//            bylineView.setText("N/A" );
-//            bodyView.setText("N/A");
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 //setting the shared content transition on photoview
                 ViewCompat.setTransitionName(mPhotoView, getResources().getString(R.string.image_transaction) + mCurrentPosition);
@@ -278,6 +254,8 @@ public class ArticleDetailFragment extends Fragment implements
                 return true;
             }
         });
+
+
     }
 
     @Override
@@ -319,16 +297,6 @@ public class ArticleDetailFragment extends Fragment implements
                 })
                 .into(mPhotoView);
 
-//        mPhotoView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-//            @Override
-//            public boolean onPreDraw() {
-//                mPhotoView.getViewTreeObserver().removeOnPreDrawListener(this);
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                    getActivity().startPostponedEnterTransition();
-//                }
-//                return true;
-//            }
-//        });
         bindViews();
     }
 
@@ -353,7 +321,7 @@ public class ArticleDetailFragment extends Fragment implements
     }
 
     @Nullable
-    ImageView getAlbumImage() {
+    public ImageView getAlbumImage() {
         if (isViewInBounds(getActivity().getWindow().getDecorView(), mPhotoView)) {
             return mPhotoView;
         }

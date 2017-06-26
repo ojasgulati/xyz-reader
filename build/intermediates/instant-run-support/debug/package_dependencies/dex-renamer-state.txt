@@ -1,4 +1,4 @@
-#Thu Jun 22 23:35:34 IST 2017
+#Fri Jun 23 21:03:01 IST 2017
 file.2=C\:\\Users\\bittu\\AndroidStudioProjects\\xyz-reader-starter-code\\XYZReader\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\support-annotations-25.3.0_401aa4b6fbf359bb8d16e617610bcedf7ddbd7c3\\classes.dex
 base.2=C\:\\Users\\bittu\\AndroidStudioProjects\\xyz-reader-starter-code\\XYZReader\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\support-annotations-25.3.0_401aa4b6fbf359bb8d16e617610bcedf7ddbd7c3
 file.1=C\:\\Users\\bittu\\AndroidStudioProjects\\xyz-reader-starter-code\\XYZReader\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\okhttp-3.1.2_f31be52a076462c0073f17e31d8218b97cb92d75\\classes.dex

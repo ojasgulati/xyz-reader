@@ -11,14 +11,14 @@
         android:id="@+id/article_body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/ltgray"
-        android:textSize="@dimen/detail_body_text_size"
-        android:paddingTop="@dimen/detail_metabar_vert_padding"
-        android:paddingLeft="@dimen/detail_metabar_vert_padding"
-        android:paddingStart="@dimen/detail_metabar_vert_padding"
+        android:background="@color/cardView"
         android:paddingEnd="@dimen/detail_metabar_vert_padding"
+        android:paddingLeft="@dimen/detail_metabar_vert_padding"
         android:paddingRight="@dimen/detail_metabar_vert_padding"
-        android:background="@color/cardView"/>
+        android:paddingStart="@dimen/detail_metabar_vert_padding"
+        android:paddingTop="@dimen/detail_metabar_vert_padding"
+        android:textColor="@color/ltgray"
+        android:textSize="@dimen/detail_body_text_size" />
 
 
 </android.support.v4.widget.NestedScrollView>

@@ -164,6 +164,7 @@ public class ArticleDetailActivity extends AppCompatActivity
         Intent data = new Intent();
         data.putExtra(ArticleListActivity.STARTING_ITEM_POSITION, mStartingPosition);
         data.putExtra(ArticleListActivity.CURRENT_ITEM_POSITION, mCurrentPosition);
+
         setResult(RESULT_OK, data);
         super.finishAfterTransition();
     }
@@ -175,10 +176,6 @@ public class ArticleDetailActivity extends AppCompatActivity
         outState.putInt(ArticleListActivity.CURRENT_ITEM_POSITION, mCurrentPosition);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
 
     private class MyPagerAdapter extends FragmentStatePagerAdapter {
         public MyPagerAdapter(FragmentManager fm) {
@@ -202,4 +199,5 @@ public class ArticleDetailActivity extends AppCompatActivity
             return (mCursor != null) ? mCursor.getCount() : 0;
         }
     }
+
 }
